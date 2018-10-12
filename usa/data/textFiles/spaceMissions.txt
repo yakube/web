@@ -5,7 +5,8 @@ MA-7	Aurora 7	Carpenter	12:45 on May 24, 1962	LC-14	4 h 56 m 5 s	3	167 (269)	100
 MA-8	Sigma 7	Schirra	12:15 on Oct. 3, 1962	LC-14	9 h 13 m 15 s	6	176 (283)	100 (161)	17,558 (28,257)	4.6 (7.4)
 MA-9	Faith 7	Cooper	13:04 on May 15, 1963	LC-14	1 d 10 h 19 m 49 s	22	166 (267)	100 (161)	17,547 (28,239)	5.0 (8.1)
 Apollo 1	Feb 21, 1967	AS-204	CSM-012	None	Gus Grissom
-Apollo 4	Nov 9, 1967	AS-501	CSM-017	LTA-10R	None	First test flight of Saturn V, placed a CSM in a high Earth orbit; demonstrated S-IVB restart; qualified CM heat shield to Apollo 5	Jan 22, 1968	AS-204	None	LM-1	None	Earth orbital flight test of LM, launched on Saturn IB; demonstrated ascent and descent propulsion; man-rated the LM.
+Apollo 4	Nov 9, 1967	AS-501	CSM-017	LTA-10R	None	First test flight of Saturn V, placed a CSM in a high Earth orbit; demonstrated S-IVB restart; qualified CM h
+Apollo 5	Jan 22, 1968	AS-204	None	LM-1	None	Earth orbital flight test of LM, launched on Saturn IB; demonstrated ascent and descent propulsion; man-rated the LM.
 Apollo 6	Apr 4, 1968	AS-502	CM-020
 Apollo 7	Oct 11, 1968	AS-205	CSM-101	None	Wally Schirra
 Apollo 8	Dec 21, 1968	AS-503	CSM-103	LTA-B	Frank Borman
@@ -18,6 +19,16 @@ Apollo 14	Jan 31 – Feb 9, 1971	AS-509	CSM-110 Kitty Hawk	LM-8
 Apollo 15	Jul 26 – Aug 7, 1971	AS-510	CSM-112 Endeavour	LM-10
 Apollo 16	Apr 16, 1972	AS-511	CSM-113 Casper	LM-11
 Apollo 17	Dec 7, 1972	AS-512	CSM-114 America	LM-12
-Skylab 2 Jun 22, 1973
-Skylab 3 Sep 25, 1973
-Skylab 4 Nov 16, 1973
+Skylab 2 	Jun 22, 1973
+Skylab 3 	Sep 25, 1973
+Skylab 4 	Nov 16, 1973
+Gemini III	Mar 23, 1965	14:24 UTC	00d 04h 52m 31s
+Gemini IV	Jun 7, 1965	15:16 UTC	04d 01h 56m 12s
+Gemini V	Aug 21, 1965
+Gemini VII	Dec 18, 1965	19:30 UTC	13d 18h 35m 01s
+Gemini VI-A	Dec 16, 1965	13:37 UTC	01d 01h 51m 24s
+Gemini VIII	Mar 17, 1966	16:41 UTC	00d 10h 41m 26s
+Gemini IX-A	Jun 6, 1966	13:39 UTC	03d 00h 20m 50s
+Gemini X	Jul 21, 1966	22:20 UTC	02d 22h 46m 39s
+Gemini XI	Sep 15, 1966	14:42 UTC	02d 23h 17m 09s
+Gemini XII	Nov 15, 1966	20:46 UTC	03d 22h 34m 31s
