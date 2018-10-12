@@ -17,10 +17,11 @@ function Enemy(x, y)
 function Laser(x, y, player)
 {
   effects.laser.play();
-  effects.laser.setVolume(0.2);
+  //effects.laser.setVolume(0.2);
   this.x=x;
   this.y=y;
   this.player=player;
+  this.pat=random(3);
   this.move=function()
   {
     if (this.player==true && this.y>-50)
@@ -31,19 +32,26 @@ function Laser(x, y, player)
   this.display=function()
   {
     if (this.player)
-      fill(255, 0, 0);
+    {
+      fill(0,0,255);
+      if(this.pat>2)
+        fill(255,0,0);
+      else if(this.pat>1)
+        fill(255,255,255);
+    }
     else
       fill(0, 255, 0);
-    rect(this.x-2, this.y-5, 4, 10);
+    rect(this.x-4, this.y-7.5, 8, 15);
   }
   this.check=function(other)
   {
-    return (this.x-2<other.x+32 && this.x+2>other.x-32 && this.y+5>other.y-32 && this.y-5<other.y+32);
+    return (this.x-2<other.x+32 && this.x+2>other.x-32 && this.y+7.5>other.y-32 && this.y-7.5<other.y+32);
   }
 }
 function Explosion(x, y)
 {
   effects.explode.play();
+  score++;
   effects.explode.setVolume(0.2);
   if (random(1)>.9) {
     effects.scream.play();
