@@ -11,7 +11,7 @@ function Enemy(x, y)
   }
   this.check=function(other)
   {
-    return (this.x-32<other.x+32 && this.x+32>other.x-32 && this.y+32>other.y-32 && this.y-32<other.y+32 && this.y-32>0 && this.y+32<height);//check here if collision doesn't work
+    return (this.x-32<other.x+32 && this.x+32>other.x-32 && this.y+32>other.y-32 && this.y-32<other.y+32 && this.y-32>0 && this.y+32<1080);//check here if collision doesn't work
   }
 }
 function Laser(x, y, player, xvf)
@@ -28,7 +28,7 @@ function Laser(x, y, player, xvf)
     this.x+=xvf;
     if (this.player==true && this.y>-50)
       this.y-=20;
-    else if (this.player==false && this.y<height+50)
+    else if (this.player==false && this.y<1080+50)
       this.y+=14+level;
   }
   this.display=function()
@@ -46,7 +46,7 @@ function Laser(x, y, player, xvf)
   }
   this.check=function(other)
   {
-    return (this.x-2<other.x+32 && this.x+2>other.x-32 && this.y+7.5>other.y-32 && this.y-7.5<other.y+32 && this.y-7.5>0 && this.y+7.5<height);//and here
+    return (this.x-2<other.x+32 && this.x+2>other.x-32 && this.y+7.5>other.y-32 && this.y-7.5<other.y+32 && this.y-7.5>0 && this.y+7.5<1080);//and here
   }
 }
 function Explosion(x, y)
@@ -55,7 +55,7 @@ function Explosion(x, y)
   score++;
   bench++;
   effects.explode.setVolume(0.2);
-  if (random(1)>.9) {
+  if (random(1)>.95) {
     effects.scream.play();
   }
   this.x=x;
@@ -80,7 +80,7 @@ function fly()
     {
       enemies[i].y+=10;
       enemies[i].x-=random((enemies[i].x-playerShip.x)/50);
-      if (enemies[i].y>height+32)
+      if (enemies[i].y>1080+32)
       {
         enemies[i].y=-32;
         enemies[i].hasLooped==true;
@@ -93,7 +93,7 @@ function fly()
     } else
     {
       ebb(enemies[i]);
-      if (random(.995+.005*level)>.99)//how likely it is an enemy will fly
+      if (random(.995+.005*level)>.99&&spawn)//how likely it is an enemy will fly
         enemies[i].isFlying=true;
     }
   }

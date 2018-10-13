@@ -13,10 +13,10 @@ var arbor;
 var un;
 var shot;
 var spawn;
-var frameTimer;
+var frameTimer,sf,cn;
 
 numBacks=8; //change these when adding more
-numSongs=3;
+numSongs=6;
 numSprites=10;
 //((MR|MA)-\d)|(Apollo \d{1,2})|(Skylab \d) usa regex
 //\w{3}\.?\s\d{1,2},\s\d{4} usa date
@@ -64,7 +64,10 @@ exSprite=loadImage("data/sprites/explode.png");
 start=loadImage("data/backgrounds/startScreen.jpg");
 }
 function setup() {
-  createCanvas(1920, 1080);
+  cn=createCanvas(1920, 1080);
+  sf=min(windowWidth/1920,windowHeight/1080);
+  cn.size(1920*sf,1080*sf);
+  cn.position((windowWidth-1920*sf)/2,(windowHeight-1080*sf)/2);
   curBack=random(backgrounds);
   curSong=random(songs);
   //curSong.play();
@@ -100,38 +103,19 @@ function setup() {
   strokeWeight(4);
   shot=5;
   spawn=false;
-  
-  background(start);//start screen design
-  textAlign(CENTER,CENTER);
-  strokeWeight(8)
-  stroke(0);
-  fill(255);
-  textSize(100);
-  fill(255,255,0);
-  text(arbor.value.date,width/2,height/10);
-  textSize(70);
-  text("Mission: "+arbor.value.mission[0],width/2,20+height/5);
-  textSize(40);
-  fill(255);
-  text("When I embarked on my first spaceflight, I never imagined it'd be a warzone",width/2,125+height/5);
-  text("But I discovered Pandora's Box",width/2,175+height/5);
-  text("A wormhole, bridging space and time, deep into the thermosphere",width/2,225+height/5);
-  text("Now I'm the only thing standing between America",width/2,275+height/5);
-  text("And the enemy from a thousand realities",width/2,325+height/5);
-  text("I will defend the homeland at all costs",width/2,375+height/5);
-  textSize(80);
-  fill(255,0,0);
-  text("The Republic Will Not Fall",width/2,475+height/5);
-  
-  textAlign(LEFT,BASELINE);
 }
 function draw() {
+  scale(sf);
   clockwork++;
   if (lives<0)//player is dead
   {
     lives=999;
+    curSong.pause();
+    death.music.play();
+  }else if(lives>900)
+  {
     imageMode(CORNER);
-    background(death.screen);
+    image(death.screen,0,0);
     imageMode(CENTER);
     textAlign(CENTER);
     stroke(0);
@@ -139,39 +123,51 @@ function draw() {
     fill(255);
     textSize(70);
     fill(255,100,100);
-    text("Alas, you destroyed "+score+" of them", width/2, -100+height/4);
-    text("But it wasn't enough", width/2, height/4);
+    text("Alas, you destroyed "+score+" of them", 1920/2, -100+1080/4);
+    text("But it wasn't enough", 1920/2, 1080/4);
     fill(255);
-    text("This was the day freedom died",width/2, height/2);
-    text("(Jul 4, 1776 - "+arbor.value.date+")", width/2, 100+height/2);
+    text("This was the day freedom died",1920/2, 1080/2);
+    text("(Jul 4, 1776 - "+arbor.value.date+")", 1920/2, 100+1080/2);
     fill(150,150,255);
-    text("[F5] Rise Again", width/2, 100+3*height/4);
-    text("[F11] Exit Fullscreen", width/2, 200+3*height/4);
-    curSong.pause();
-    death.music.play();
-  } else if (spawn==false && lives!=999)
+    text("[F5] Rise Again", 1920/2, 100+3*1080/4);
+    text("[F11] Toggle Fullscreen", 1920/2, 200+3*1080/4);
+  }
+  else if(lives>2)
   {
-    fill(255,165,0);
-    textAlign(CENTER,CENTER);
-    rectMode(CENTER);
-    //strokeWeight(0);
-    rect(width/2,3*height/4,300,60);
-    fill(255);
-    textSize(40);
-    text("[CTRL] Spawn", width/2, 3*height/4);
-    rectMode(CORNER);
-    textAlign(LEFT,BASELINE);
-    strokeWeight(4);
-  } else if (lives>=0 && lives<100)//player is alive
+    image(start,0,0);//start screen design
+  textAlign(CENTER,CENTER);
+  strokeWeight(8)
+  stroke(0);
+  fill(255);
+  textSize(100);
+  fill(255,255,0);
+  text(arbor.value.date,1920/2,1080/10);
+  textSize(70);
+  text("Mission: "+arbor.value.mission[0],1920/2,20+1080/5);
+  textSize(40);
+  fill(255);
+  text("When I embarked on my first spaceflight, I never imagined it'd be a warzone",1920/2,125+1080/5);
+  text("But I discovered Pandora's Box",1920/2,175+1080/5);
+  text("A wormhole, bridging space and time, deep into the thermosphere",1920/2,225+1080/5);
+  text("Now I'm the only thing standing between America",1920/2,275+1080/5);
+  text("And the enemy from a thousand realities",1920/2,325+1080/5);
+  text("I will defend the homeland at all costs",1920/2,375+1080/5);
+  textSize(80);
+  fill(255,0,0);
+  text("The Republic Will Not Fall",1920/2,475+1080/5);
+  textAlign(LEFT,BASELINE);
+  strokeWeight(4);
+  }
+  else if (lives>=0 && lives<900)//player is alive
   {
     jukeBox();//keeps songs rolling
     imageMode(CORNER);
-    background(curBack);//background stuff
+    image(curBack,0,0);//background stuff
     imageMode(CENTER);
 
-    if (keyIsDown(LEFT_ARROW)&&playerShip.x>32)//basic controls
+    if (keyIsDown(LEFT_ARROW)&&playerShip.x>32&&spawn)//basic controls
       playerShip.x-=10;
-    if (keyIsDown(RIGHT_ARROW)&&playerShip.x<1888)
+    if (keyIsDown(RIGHT_ARROW)&&playerShip.x<1888&&spawn)
       playerShip.x+=10;
     if (enemies.length>0)//enemies still exist
     {
@@ -200,11 +196,12 @@ function draw() {
           if(lives==0)
             lives--;
           spawn=false;//----respawn feature
+          playerShip.y=1280;
           temp=false;
         }
         if (temp==true)
           tempLasers.push(lasers[i]);
-        if (lasers[i].y>height+5 || lasers[i].y<-5)//remove unseen lasers
+        if (lasers[i].y>1080+5 || lasers[i].y<-5)//remove unseen lasers
           lasers.splice(i, 1);
       }
       lasers=tempLasers;
@@ -233,9 +230,10 @@ function draw() {
           score--;
           bench--;
           spawn=false;
+          playerShip.y=1280;
         }
       }
-      if (random(1)>.95)//how likely it is any enemy will fire
+      if (random(.998+.002*level)>.95&&spawn)//how likely it is any enemy will fire
         enemyFire(random(enemies));
       fly();
       if (clockwork>180)
@@ -256,14 +254,14 @@ function draw() {
       {
         lasers[i].move();
         lasers[i].display();
-        if (lasers[i].y<height/2)
+        if (lasers[i].y<1080/2)
         {
           if (shot==5)
             score+=50
   else
   score+=5*shot;
 shot=5;
-if (lasers[i].x<width/2)
+if (lasers[i].x<1920/2)
 {
   if (arbor.left!=null)
     arbor=arbor.left;
@@ -285,18 +283,18 @@ ayudame=true;
 textAlign(CENTER);
 textSize(32);
 fill(0, 0, 255, 100);
-rect(0, 0, width/2, height/2);      
+rect(0, 0, 1920/2, 1080/2);      
 fill(255, 0, 0, 100);
-rect(width/2, 0, width/2, height/2);
+rect(1920/2, 0, 1920/2, 1080/2);
 fill(255);
 if (arbor.left!=null)
-  text("Shoot Here for "+arbor.left.value.mission[0], width/4, height/4);
+  text("Shoot Here for "+arbor.left.value.mission[0], 1920/4, 1080/4);
 else
-  text("Curtain #1", width/4, height/4); 
+  text("Curtain #1", 1920/4, 1080/4); 
 if (arbor.right!=null)
-  text("Shoot Here for "+arbor.right.value.mission[0], 3*width/4, height/4);
+  text("Shoot Here for "+arbor.right.value.mission[0], 3*1920/4, 1080/4);
 else
-  text("Curtain #2", 3*width/4, height/4);
+  text("Curtain #2", 3*1920/4, 1080/4);
 textAlign(LEFT);
 }
 playerShip.display();
@@ -348,11 +346,11 @@ stroke(0);
 text(score, 25, 50)
   textAlign(RIGHT);
 fill(0,255,0);
-text("Lv."+level, width-25, 50);
+text("Lv."+level, 1920-25, 50);
 if (lives>0)
-  image(mainSprite, width-64, 100);
+  image(mainSprite, 1920-64, 100);
 if (lives>1)
-  image(mainSprite, width-64, 180);
+  image(mainSprite, 1920-64, 180);
 textAlign(CENTER);
 textSize(75);
 stroke(0);
@@ -361,20 +359,33 @@ if(frameTimer>0)//frameTimer tester-works
   frameTimer--;
 //print(frameTimer);
 fill(255,0,0);
-text(arbor.value.mission[0], width/6, 1050);
+text(arbor.value.mission[0], 1920/6, 1050);
 fill(255);
-text(arbor.value.date, width/2, 1050);
+text(arbor.value.date, 1920/2, 1050);
 if(lives==2 && frameTimer>0)
 {
   fill(255,255,255,15+frameTimer*3);
   stroke(0,0,0,15+frameTimer*2);
   textSize(50);
-  text("[SPACE] Fire\t\t\t\t\t\t[<][>] Move",width/2,height/2);
+  text("[SPACE] Fire\t\t\t\t\t\t[<][>] Move",1920/2,2*1080/3);
 }
 textAlign(LEFT)
 strokeWeight(4);
 stroke(0);
 }
+if (spawn==false && lives<900 && lives>=0)
+  {
+    fill(255,165,0);
+    textAlign(CENTER,CENTER);
+    rectMode(CENTER);
+    rect(1920/2,3*1080/4,300,60);
+    fill(255);
+    textSize(40);
+    text("[CTRL] Spawn", 1920/2, 3*1080/4);
+    rectMode(CORNER);
+    textAlign(LEFT,BASELINE);
+    strokeWeight(4);
+  } 
 }
 function jukeBox()
 {
@@ -386,7 +397,7 @@ function jukeBox()
 }
 function keyPressed()
 {
-  if (spawn==true)
+  if (spawn==true && lives<900)
   {
     //print(key);
     //(score>=((i+1)*(48/5))+((level-1)*48))
@@ -456,4 +467,13 @@ function enemiesPlease()
       enemies.push(new Enemy(320+i*80, 80+j*80));
     }
   }
+}
+function windowResized()
+{
+  imageMode(CENTER);
+  sf=min(windowWidth/1920,windowHeight/1080);
+  cn.size(1920*sf,1080*sf);
+  cn.position((windowWidth-1920*sf)/2,(windowHeight-1080*sf)/2);
+  noCursor();
+  imageMode(CORNER);
 }

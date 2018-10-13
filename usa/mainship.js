@@ -1,6 +1,6 @@
 function MainShip()
 {
-  this.x=random(width/2)+32+width/4;
+  this.x=random(1920/2)+32+1920/4;
   this.y=916;
   this.sprite=mainSprite;
   this.display=function()
