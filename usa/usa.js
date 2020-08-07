@@ -66,7 +66,7 @@ start=loadImage("data/backgrounds/startScreen.jpg");
 function setup() {
   cn=createCanvas(1920, 1080);
   sf=min(windowWidth/1920,windowHeight/1080);
-  cn.size(1920*sf,1080*sf);
+  resizeCanvas(1920*sf,1080*sf);
   cn.position((windowWidth-1920*sf)/2,(windowHeight-1080*sf)/2);
   curBack=random(backgrounds);
   curSong=random(songs);
@@ -472,7 +472,7 @@ function windowResized()
 {
   imageMode(CENTER);
   sf=min(windowWidth/1920,windowHeight/1080);
-  cn.size(1920*sf,1080*sf);
+  resizeCanvas(1920*sf,1080*sf);
   cn.position((windowWidth-1920*sf)/2,(windowHeight-1080*sf)/2);
   noCursor();
   imageMode(CORNER);
